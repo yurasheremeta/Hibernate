@@ -1,18 +1,25 @@
 package ua.logos.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Getter
+@Setter
+@NoArgsConstructor
 
 @Entity
 @Table(name="addres")
-public class Addres {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Addres extends baseEntity {
 
 	@Column(name = "country" , length = 50 , nullable =false)
 	private String country;
@@ -28,58 +35,8 @@ public class Addres {
 	
 	@Column(name = "flat_number" , nullable = false)
 	private int flatNumber;
+	@OneToMany(mappedBy = "addres")
+	private List<User> users;
 	 
-	public Addres() {
-		
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public int getBuildNumber() {
-		return buildNumber;
-	}
-
-	public void setBuildNumber(int buildNumber) {
-		this.buildNumber = buildNumber;
-	}
-
-	public int getFlatNumber() {
-		return flatNumber;
-	}
-
-	public void setFlatNumber(int flatNumber) {
-		this.flatNumber = flatNumber;
-	}
-	
 	
 }

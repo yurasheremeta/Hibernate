@@ -1,19 +1,31 @@
 package ua.logos.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 
 @Entity
 @Table(name = "book")
-public class Book {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+public class Book extends baseEntity {	
 	@Column(name = "isbn" , length = 50 , nullable = false , unique = true)
 	private String isbn;
 	
@@ -24,40 +36,15 @@ public class Book {
 	private String publish_Date ;
 
 	
-	public Book() {
-		
-	}
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public String getBookNmae() {
-		return bookNmae;
-	}
-
-	public void setBookNmae(String bookNmae) {
-		this.bookNmae = bookNmae;
-	}
-
-	public String getPublish_Date() {
-		return publish_Date;
-	}
-
-	public void setPublish_Date(String publish_Date) {
-		this.publish_Date = publish_Date;
-	}
+	@ManyToMany
+	@JoinTable(name = "author_book" , joinColumns = @JoinColumn(name = "book_id"), 
+	inverseJoinColumns = @JoinColumn (name = "author_id"))
+	private List<Author> authors;
+	
+	@ManyToMany(mappedBy = "books")
+	private List<Category> categories;
+	@OneToMany(mappedBy = "book")
+	private List<TakenBook> takenBook;
 
 	
 }
